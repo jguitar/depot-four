@@ -19,9 +19,8 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test 'product price must be positive' do
-    product = Product.new(title:       'My Book Title',
-                          description: 'yyy',
-                          image_url:   'zzz.jpg')
+    product = new_product('zzz.jpg')
+
     product.price = -1
     assert product.invalid?
     assert_equal ['must be greater than or equal to 0.01'], product.errors[:price]
@@ -48,10 +47,9 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test 'product is not valid without a unique title' do
-    product = Product.new(title:       products(:ruby).title,
-                          description: 'yyy',
-                          price:       1,
-                          image_url:   'fred.gif')
+    product = new_product('fred.jpg')
+    product.title = products(:ruby).title
+
     assert product.invalid?
     assert_equal [I18n.translate('errors.messages.taken')], product.errors[:title]
   end
