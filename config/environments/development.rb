@@ -24,4 +24,7 @@ DepotFour::Application.configure do
 
   # Debug mode disables concatenation and preprocessing of assets.
   config.assets.debug = true
+
+  # activates cache 
+  config.action_controller.perform_caching = true
 end
