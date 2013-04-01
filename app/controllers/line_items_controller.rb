@@ -1,5 +1,6 @@
 class LineItemsController < ApplicationController
   include CurrentCart
+  include SessionCounter
 
   before_action :set_cart, only: [:create]
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
@@ -29,6 +30,8 @@ class LineItemsController < ApplicationController
   def create
     product = Product.find(params[:product_id])
     @line_item = @cart.line_items.build(product: product)
+
+    reset_counter
 
     respond_to do |format|
       if @line_item.save
